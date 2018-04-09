@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="AdaptiveUISample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AdaptiveUISample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="LayoutVisualStates">
+                <VisualState x:Name="WideLayout">
+                    <VisualState.Setters>
+                        <!-- 
+				        这里实际上可以包括多个setter，Target为对应控件的属性，Value为你想要设置的属性值 
+				        当处于WideLayout状态下时，RightColumn（对应是哪个控件见上面）的宽度被设置为*
+			            -->
+                        <Setter Target="RightColumn.Width" Value="*"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.Setters>
+                        <Setter Target="RightColumn.Width" Value="0"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*" x:Name="RightColumn"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!-- 创建了两个Image控件，放在Grid的第一列和第二列 -->
+        <Image Grid.Column="0" Source="Assets/left.jpg" ></Image>
+        <Image Grid.Column="1" Source="Assets/right.jpg"></Image>
+
+    </Grid>
+</Page>
