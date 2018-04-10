@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="AdaptiveUIWithListView.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AdaptiveUIWithListView"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!-- ItemSource用于指定ListView的数据源，这里的Array为MainPage.xml.cs中MainPage类的一个集合 -->
+        <ListView Margin="20,20,50,20" ItemsSource="{x:Bind Array}" x:Name="MyList">
+            <ListView.ItemTemplate>
+                <!-- DataType指定Array中对象的类型，这里的Item为我们自定义的一个类 -->
+                <DataTemplate x:DataType="local:Item">
+                    <!--
+                        这里的ListView对应的模板为一个Checkbox，一个Grid（用于分隔开CheckBox和TextBlock）
+                        一个Imag，还有一个文本框
+                    -->
+                    <RelativePanel>
+                        <CheckBox  HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" CharacterSpacing="0" Margin="10,10,0,0"></CheckBox>
+                        <!-- 
+                            在宽屏状态下，Space的宽度为90，这时候文本框和Checkbox中间存在的空间正好存放图片
+                            在窄屏状态下，Space的宽度为0，此时图片隐藏，Checkbox后紧跟着文本框
+                        -->
+                        <Grid Width="90" x:Name="Space"></Grid>
+                        <Image  HorizontalAlignment="Left" Height="40" Margin="50,10,0,0" VerticalAlignment="Top" Width="40" Source="{x:Bind Source}" x:Name="MyImage"></Image>
+                        <TextBlock Text="{x:Bind Content}"  RelativePanel.RightOf="Space" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="20" Margin="10,12,0,0"></TextBlock>
+                    </RelativePanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Page>
