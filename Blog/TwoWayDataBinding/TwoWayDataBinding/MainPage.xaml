@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="TwoWayDataBinding.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TwoWayDataBinding"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <!-- 声明资源文件 -->
+    <Page.Resources>
+        <local:CheckBoxConverter  x:Key="ConvertCheck"></local:CheckBoxConverter>
+    </Page.Resources>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!-- ItemSource用于指定ListView的数据源 -->
+        <ListView Margin="20,20,50,20" ItemsSource="{x:Bind Array}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:Item">
+                    <RelativePanel>
+                        <!-- Source="{x:Bind Ischecked}"指定CheckBox是否被选中 -->
+                        <CheckBox  IsChecked="{x:Bind Ischecked,Converter={StaticResource ConvertCheck},Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"></CheckBox>
+                        <Grid Width="90" x:Name="Space"></Grid>
+                        <!-- Source="{x:Bind Source}"指定Image图片控件的图片源 -->
+                        <Image  Source="{x:Bind Source,Mode=OneWay}" HorizontalAlignment="Left" Height="40" Margin="50,10,0,0" VerticalAlignment="Top" Width="40"></Image>
+                        <!-- Text="{x:Bind Content}"指定文本块的内容，Source和Content都是Item的属性 -->
+                        <TextBox Text="{x:Bind Content,Mode=TwoWay}"  RelativePanel.RightOf="Space" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="20" Margin="10,12,0,0"></TextBox>
+                    </RelativePanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+    <!-- 
+        点击Add按钮将往Array中添加元素 
+        点击ShowResults按钮将打印Array的内容
+    -->
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Add" Click="AddButton_Click"/>
+            <AppBarButton Icon="ShowResults" Click="ShowButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
