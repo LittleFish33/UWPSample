@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="SQLiteSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SQLiteSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!-- 左边一个ListView显示所有的Item -->
+            <ListView IsItemClickEnabled="True" ItemClick="ItemClicked"
+                          ItemsSource="{x:Bind AllItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Item">
+                        <RelativePanel Width="400" BorderThickness="0,0,0,1" BorderBrush="#EEEEEE">
+                            <TextBlock Text="{x:Bind Title,Mode=TwoWay}" HorizontalAlignment="Center" Margin="0,8,0,0"></TextBlock>
+                            <AppBarButton Icon="Delete" RelativePanel.AlignRightWithPanel="True" Width="35" Height="35" Click="DeleteClick"/>
+                        </RelativePanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+
+        <Grid Grid.Column="1" >
+            <!-- 右边包括一个搜索界面和一个添加/更新界面 -->
+            <StackPanel>
+                <TextBox Header="请输入相关Item的标题或内容" x:Name="Query" Margin="10"/>
+                <Button Content="查询" Click="queryClick" HorizontalAlignment="Center" Margin="10"/>
+                <TextBox  Header="Title" Margin="10" Text="{x:Bind rightItem.Title,Mode=TwoWay}"/>
+                <TextBox  Height="100" Margin="10"  Header="Details" Text="{x:Bind rightItem.Detail,Mode=TwoWay}"/>
+                <RelativePanel>
+                    <Button Content="Create" Click="Button_Click" x:Name="MyButton" Margin="10" RelativePanel.AlignLeftWithPanel="True"></Button>
+                    <Button Content="Cancel" Click="Cancel_Click" Margin="10" RelativePanel.AlignRightWithPanel="True"></Button>
+                </RelativePanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
