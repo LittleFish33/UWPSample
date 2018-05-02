@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="MediaElementAndSlider.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MediaElementAndSlider"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:ProgressConverter x:Key="progressConverter"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <!-- 封面 -->
+            <Ellipse x:Name="ellipse" Width="200" Height="200" RenderTransformOrigin="0.5,0.5">
+                <Ellipse.RenderTransform>
+                    <CompositeTransform/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Resources>
+                    <!--Storyboard是一个动画容器-->
+                    <Storyboard x:Name="EllStoryboard" RepeatBehavior="Forever">
+                        <DoubleAnimation Duration="0:0:20" To="360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ellipse" d:IsOptimized="True"/>
+                    </Storyboard>
+                </Ellipse.Resources>
+                <!--这是用一张图片来填充这个椭圆形-->
+                <Ellipse.Fill>
+                    <ImageBrush x:Name="picture" ImageSource="Assets/cover.jpg" />
+                </Ellipse.Fill>
+            </Ellipse>
+            <MediaElement x:Name="mediaSimple"
+                Source="ms-appx:///Assets/种族假象.mp3" AutoPlay="False">
+            </MediaElement>
+            <!-- 进度条，使用progressConverter转换器 -->
+            <Slider x:Name="progress" Minimum="0" Maximum="100" Value="{Binding ElementName=mediaSimple,Path=Position,Converter={StaticResource progressConverter}, Mode=TwoWay}"></Slider>
+        </StackPanel>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar x:Name="commandBar">
+            <AppBarButton Icon="Play" Click="playClick"/>
+            <AppBarButton Icon="Clear" Click="pauseClick"/>
+            <AppBarButton Icon="Stop" Click="stopClick"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
